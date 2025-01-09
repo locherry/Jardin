@@ -111,9 +111,6 @@ def affichage (chemin:list)->None :
             fichier.write(contenu_du_fichier_dot)
 
     def genere_image(chemin_du_fichier_dot:str) -> None:
-        """
-            |!| Ne marche pas dans le terminal de vs code, il faut l'executer avec un terminal externe (jsp pourquoi)
-        """
         command = f'dot -T png -O {chemin_du_fichier_dot}'
         # deux manieres, ca:
         import subprocess
