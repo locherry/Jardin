@@ -58,7 +58,7 @@ def chemin_entre_2_elem_en_boucle(X, Y):
 
 ##########  PRINCIPAL #############
 
-X = 'pissenlit' #ceci est un pissenlit
+X = 'pissenlit' 
 Y = 'potiron'
 
 chemin = chemin_entre_2_elem_en_boucle(X, Y)
