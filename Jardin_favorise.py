@@ -1,7 +1,7 @@
 import csv
 
 ########### FONCTIONS ############
-def csvToDic(fic):  
+def csvToDic(fic):
     dico = {
         'qsdf' : ['qzdf', 'qdf']
     }
@@ -58,7 +58,7 @@ def chemin_entre_2_elem_en_boucle(X, Y):
 
 ##########  PRINCIPAL #############
 
-X = 'pissenlit'
+X = 'pissenlit' #ceci est un pissenlit
 Y = 'potiron'
 
 chemin = chemin_entre_2_elem_en_boucle(X, Y)
