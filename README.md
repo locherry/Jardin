@@ -1,17 +1,19 @@
 # Jardin
 Magnifique jardin pour notre projet d'info
 
-##### OBJECTIFS
-[X] finaliser affichage
+#### OBJECTIFS
+- [ ] finaliser affichage
 
-[ ] adapter aux conditions du mileux
+- [ ] adapter aux conditions du mileux
 
-[ ] optimisation du compost
-[ ] utiliser le fichier TEST
-[ ] redaction du PDF
+- [ ] optimisation du compost
+
+- [ ] utiliser le fichier TEST
+
+- [ ] redaction du PDF
 
 
-##### REGLES
+#### REGLES
 
 On definit des parametres du milieu
 et on veut que les plantes suivent les bioindicateurs 

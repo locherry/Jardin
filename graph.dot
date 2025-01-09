@@ -1,8 +1,0 @@
-digraph {
-    layout="circo"
-    "thym d'hiver" -> granolle
-    granolle -> tomate
-    tomate -> zoumdaf
-    zoumdaf -> millepertuis
-    millepertuis -> "thym d'hiver"
-}

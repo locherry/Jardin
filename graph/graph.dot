@@ -1,0 +1,11 @@
+digraph {
+    layout="circo"
+    "pissenlit" -> "ail"
+    "ail" -> "tomate"
+    "tomate" -> "chou"
+    "chou" -> "potiron"
+    "potiron" -> "haricot"
+    "haricot" -> "carotte"
+    "carotte" -> "ail"
+    "ail" -> "pissenlit"
+}

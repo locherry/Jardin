@@ -1,3 +1,6 @@
+########### IMPORTS ###########
+import csv
+
 ########### INITIALISATION ########
 
 milieu = {
@@ -30,9 +33,6 @@ milieu = {
         'delta' : 0.5
     },
 }
-
-########### IMPORTS ###########
-import csv
 
 ########### FONCTIONS ############
 def csvToDic(fic):  
@@ -90,6 +90,42 @@ def chemin_entre_2_elem_en_boucle(X, Y):
     chm1.pop()
     return chm1+chm2
 
+##########  AFFICHAGE #############
+
+def affichage (chemin:list)->None :
+    def genere_dot (chemin : list, chemin_du_fichier_dot:str) -> None:
+        """
+            Genere un fichier .dot a partir d'un chemin
+            '\\n' permet de revenir a la ligne
+        """
+        tab = '    '
+        parram =  tab + 'layout="circo"\n'
+        chemin_en_dot = ''
+        for i in range(len(chemin)-1):
+            chemin_en_dot += f'{tab}"{chemin[i]}" -> "{chemin[i+1]}"\n'
+        
+        contenu_du_fichier_dot = 'digraph {\n' + parram + chemin_en_dot + '}\n'
+
+        with open(chemin_du_fichier_dot, 'w+') as fichier:
+            # Ecris le code dot dans le fichier dot
+            fichier.write(contenu_du_fichier_dot)
+
+    def genere_image(chemin_du_fichier_dot:str) -> None:
+        """
+            |!| Ne marche pas dans le terminal de vs code, il faut l'executer avec un terminal externe (jsp pourquoi)
+        """
+        command = f'dot -T png -O {chemin_du_fichier_dot}'
+        # deux manieres, ca:
+        import subprocess
+        subprocess.run(command, shell = True, executable="/bin/bash")
+        # ou ca
+        # import os
+        # os.system(f'dot -T png -O {chemin_du_fichier_dot}')
+    
+    chemin_du_fichier_dot = "./graph/graph.dot"
+    genere_dot(chemin, chemin_du_fichier_dot)
+    genere_image(chemin_du_fichier_dot)
+
 ##########  PRINCIPAL #############
 
 X = 'pissenlit'
@@ -99,13 +135,4 @@ chemin = chemin_entre_2_elem_en_boucle(X, Y)
 
 print(chemin)
 
-##########  AFFICHAGE #############
-
-def genere_dot (chemin : list) ->str:
-    parram =  'layout="circo"\n'
-    chemin_en_dot = ''
-    for i in range(len(chemin)-1):
-        chemin_en_dot += f"{chemin[i]} -> {chemin[i+1]} \n"
-    return 'digraph {\n' + parram + chemin_en_dot + '}'
-
-print(genere_dot(chemin))
+affichage(chemin)
