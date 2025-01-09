@@ -1,23 +1,3 @@
-##### OBJECTIFS ####
-# prochaine tache : finaliser affichage
-# prochaine tache : adapter aux conditions du mileux
-# prochaine tache : optimisation du compost
-# prochaine tache : utiliser le fichier TEST
-# prochaine tache : redaction du PDF
-
-
-########### REGLES ###########
-
-# On definit des parametres du milieu
-# et on veut que les plantes suivent les bioindicateurs 
-# avec un coefficient de variation modere
-# nous avans defini les pour chaque bioindicateur un dictionnaire
-# prenant en clef  une valeur moyenne (to be continued)
-
-
-# On veut minimiser la consomation de compost
-# 
-
 ########### INITIALISATION ########
 
 milieu = {
