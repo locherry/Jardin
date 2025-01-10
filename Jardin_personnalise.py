@@ -104,7 +104,24 @@ def affichage (chemin:list)->None :
         for i in range(len(chemin)-1):
             chemin_en_dot += f'{tab}"{chemin[i]}" -> "{chemin[i+1]}"\n'
         
-        contenu_du_fichier_dot = 'digraph {\n' + parram + chemin_en_dot + '}\n'
+        legend = """
+    subgraph cluster_01 { 
+        node [shape=plaintext]
+        key [label=<<table border="0" cellpadding="2" cellspacing="0" cellborder="0">
+        <tr><td align="right" port="i1">favorise</td></tr>
+        <tr><td align="right" port="i2">attire</td></tr>
+        <tr><td align="right" port="i3">repousse</td></tr>
+        </table>>]
+        key2 [label=<<table border="0" cellpadding="2" cellspacing="0" cellborder="0">
+        <tr><td port="i1">&nbsp;</td></tr>
+        <tr><td port="i2">&nbsp;</td></tr>
+        <tr><td port="i3">&nbsp;</td></tr>
+        </table>>]
+        key:i1:e -> key2:i1:w [color=black]
+        key:i2:e -> key2:i2:w [color=darkgreen, style=dotted]
+        key:i3:e -> key2:i3:w [color=crimson, style=dotted]
+    }\n"""
+        contenu_du_fichier_dot = 'digraph {\n' + parram + chemin_en_dot + legend + '}\n'
 
         with open(chemin_du_fichier_dot, 'w+') as fichier:
             # Ecris le code dot dans le fichier dot
