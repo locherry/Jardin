@@ -35,14 +35,12 @@ milieu = {
 }
 
 ########### FONCTIONS ############
-def csvToDic(fic):  
-    dico = {
-        'qsdf' : ['qzdf', 'qdf']
-    }
+def csvToDicFav(fic):  
+    dico = {}
     # Dictionnaire contenant comme clefs les plantes et
     # comme valeurs la liste des plantes pouvant etre favorisee
     # par la plante designee par la clef.
-    # Seuls les arcs non nuls sont retenus ici.        
+    # Seuls les arcs non nuls sont retenus ici.
     with open(fic) as f:
         myReader = csv.reader(f,delimiter = ";")
         sommet = 0
@@ -53,7 +51,23 @@ def csvToDic(fic):
                 dico[row[0]].append(row[2])
     return dico
 
-dico_favorise = csvToDic("./csv/data_arcs.csv")
+dico_favorise = csvToDicFav("./csv/data_arcs.csv")
+
+def csvToDicBio(fic):
+    dico = {}
+    # Dictionnaire contenant comme clefs les plantes et
+    # comme valeurs la liste des plantes pouvant etre favorisee
+    # par la plante designee par la clef.
+    # Seuls les arcs non nuls sont retenus ici.
+    with open(fic) as f:
+        myReader = csv.reader(f,delimiter = ";")
+        sommet = 0
+        for row in myReader:
+            dico[row[0]] = row[1:8]
+    return dico
+
+dico_bioindicateurs = csvToDicBio("./csv/data_sommets_bioindicateurs.csv")
+print(dico_bioindicateurs)
 
 def BFS_dico_fav (dico_favorise:dict, racine:str) -> dict:
     a_traiter = [racine]
