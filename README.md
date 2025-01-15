@@ -23,3 +23,5 @@ prenant en clef  une valeur moyenne (to be continued)
 
 
 On veut minimiser la consomation de compost
+
+Equipe D 205

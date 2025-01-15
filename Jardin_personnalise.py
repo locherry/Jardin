@@ -77,6 +77,8 @@ def csvToDicArcs(fic:str)->dict:
         dico = {
             plante1 : {
                 favorise : [plante1, plante2, ...],
+                poids_favorise : [poids_plante1, poids_plante2, ...]
+
                 defavorise : [plante1, plante2, ...],
                 attire: [elem1, elem2, ...],
                 repousse : [elem1, elem2, ...],
@@ -94,10 +96,17 @@ def csvToDicArcs(fic:str)->dict:
                 dico[row[0]] = {}
             if row[1] not in dico[row[0]].keys() : # si l'interaction n'est pas dans le dico de la plante en cours, ajouter l'entree correspondante
                 dico[row[0]][row[1]] = []
+                if row[1] == 'favorise' : # si la plante possede une interaction favorise il cree une clef poids_favorise
+                    dico[row[0]]['poids_favorise'] = []
+            if row[1] == 'favorise' :
+                dico[row[0]]['poids_favorise'].append(row[3])
+
             dico[row[0]][row[1]].append(row[2])
     return dico
 
-dico_arcs = csvToDicArcs("./csv/data_arcs.csv")
+dico_arcs = csvToDicArcs("./csv/data_arcs_poids.csv")
+
+print(dico_arcs)
 
 def csvToDicCategories(fic:str)->dict:
     """
@@ -155,6 +164,25 @@ def BFS_dico_fav (dico_favorise:dict, racine:str) -> dict:
                     a_traiter.append(elem)
                     dico_prec[elem]=racine_courante
     return dico_prec 
+
+def Dijkstra_ (dico_arcs_poids:dict, racine:str) -> dict:
+    """
+        https://en.wikipedia.org/wiki/Dijkstra's_algorithm
+
+
+        1. Initialize the graph with the source node to take the value of 0 and all other nodes infinity. Start with the source as the “current node”.
+        2. Visit all neighboring nodes of the current node and update their values to the cumulative sum of weights (distances) from the source. 
+           If a neighbor’s current value is smaller than the cumulative sum, it stays the same. Mark the “current node” as finished.
+        3. Mark the unfinished minimum-value node as the “current node”.
+        4. Repeat steps 2 and 3 until all nodes are finished.
+
+    """
+
+    favs = dico_arcs_poids[racine]['favorise']
+    for fav in favs :
+        pass
+
+
 
 def plus_court_chemin(arrivee,dico_prec):
     s=arrivee 
@@ -286,11 +314,11 @@ Y = 'potiron'
 X = 'ail'
 Y = 'artichaut'
 
-X = 'fenouil'
-Y = 'cosmos'
+# X = 'fenouil'
+# Y = 'cosmos'
 
-X = 'basilic'
-Y = "cresson"
+# X = 'basilic'
+# Y = "cresson"
 
 
 chemin = chemin_entre_2_elem_en_boucle(X, Y)

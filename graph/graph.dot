@@ -1,34 +1,27 @@
 digraph {
     layout="circo"
     node [color = green]
+    "bourdon"
+    "carabe"
     node [color = red]
-    "nematode"
-    "puceron"
-    "altise du colza"
-    "fourmi"
-    "mouche de la carotte"
     "campagnol"
-    "chenille"
-    "escargot"
+    "altise du colza"
+    "thrips de l'oignon"
+    "teigne du poireau"
     node [color = black]
-    "basilic" -> "tomate"
-    "tomate" -> "poireau"
-    "poireau" -> "cresson"
-    "cresson" -> "poireau"
-    "poireau" -> "asperge"
-    "asperge" -> "basilic"
-    "basilic" -> "nematode" [color=crimson, style=dotted]
-    "basilic" -> "puceron" [color=crimson, style=dotted]
-    "tomate" -> "altise du colza" [color=crimson, style=dotted]
-    "tomate" -> "fourmi" [color=crimson, style=dotted]
-    "tomate" -> "mouche de la carotte" [color=crimson, style=dotted]
-    "poireau" -> "mouche de la carotte" [color=crimson, style=dotted]
-    "cresson" -> "campagnol" [color=crimson, style=dotted]
-    "cresson" -> "puceron" [color=crimson, style=dotted]
-    "cresson" -> "chenille" [color=crimson, style=dotted]
-    "cresson" -> "fourmi" [color=crimson, style=dotted]
-    "cresson" -> "escargot" [color=crimson, style=dotted]
-    "poireau" -> "mouche de la carotte" [color=crimson, style=dotted]
+    "ail" -> "chicoree"
+    "chicoree" -> "epinard"
+    "epinard" -> "artichaut"
+    "artichaut" -> "laitue"
+    "laitue" -> "carotte"
+    "carotte" -> "ail"
+    "ail" -> "campagnol" [color=crimson, style=dotted]
+    "chicoree" -> "campagnol" [color=crimson, style=dotted]
+    "laitue" -> "altise du colza" [color=crimson, style=dotted]
+    "carotte" -> "thrips de l'oignon" [color=crimson, style=dotted]
+    "carotte" -> "teigne du poireau" [color=crimson, style=dotted]
+    "bourdon" -> "artichaut" [color=darkgreen, style=dotted]
+    "carabe" -> "carotte" [color=darkgreen, style=dotted]
 
     subgraph cluster_01 { 
         node [shape=plaintext]
