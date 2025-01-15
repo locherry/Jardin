@@ -2,7 +2,7 @@
 Magnifique jardin pour notre projet d'info
 
 #### OBJECTIFS
-- [ ] finaliser affichage
+- [ ] finaliser affichage : faire une vraie legende (exporter separement la legende et joindre les 2 images)
 
 - [ ] adapter aux conditions du mileux
 
