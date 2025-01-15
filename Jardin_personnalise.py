@@ -178,7 +178,7 @@ def chemin_entre_2_elem_en_boucle(X, Y):
 ##########  AFFICHAGE #############
 
 def affichage (chemin:list)->None :
-    def genere_dot (chemin : list, chemin_du_fichier_dot:str) -> None:
+    def genere_dot (chemin : list, chemin_du_fichier_dot : str) -> None:
         """
             Genere un fichier .dot a partir d'un chemin
             '\\n' permet de revenir a la ligne

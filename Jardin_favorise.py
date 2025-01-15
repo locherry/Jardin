@@ -53,7 +53,7 @@ def chemin_entre_2_elem(racine, arrivee):
 def chemin_entre_2_elem_en_boucle(X, Y):
     chm1 = chemin_entre_2_elem(X, Y)
     chm2 = chemin_entre_2_elem(Y, X)
-    chm1.pop()
+    chm1.pop() #pop le dernier élément de la liste 1 
     return chm1+chm2
 
 ##########  PRINCIPAL #############

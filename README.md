@@ -4,7 +4,7 @@ Magnifique jardin pour notre projet d'info
 #### OBJECTIFS
 - [ ] finaliser affichage : faire une vraie legende (exporter separement la legende et joindre les 2 images)
 
-- [ ] adapter aux conditions du mileux
+- [ ] adapter aux conditions du milieux qu'on a choisi > voir les extensions proposées qu'on peut réaliser 
 
 - [ ] optimisation du compost
 
