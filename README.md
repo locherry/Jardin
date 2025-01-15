@@ -2,15 +2,15 @@
 Magnifique jardin pour notre projet d'info
 
 #### OBJECTIFS
-- [ ] finaliser affichage : faire une vraie legende (exporter separement la legende et joindre les 2 images)
-
-- [ ] adapter aux conditions du milieux qu'on a choisi > voir les extensions proposées qu'on peut réaliser 
-
 - [ ] optimisation du compost
 
 - [ ] utiliser le fichier TEST
 
 - [ ] redaction du PDF
+
+- [ ] finaliser affichage : faire une vraie legende (exporter separement la legende et joindre les 2 images)
+
+- [ ] adapter aux conditions du milieux qu'on a choisi > voir les extensions proposées qu'on peut réaliser 
 
 
 #### REGLES
@@ -24,4 +24,4 @@ prenant en clef  une valeur moyenne (to be continued)
 
 On veut minimiser la consomation de compost
 
-Equipe D 205
+Equipe D 205 (a supprimer)
