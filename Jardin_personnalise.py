@@ -106,8 +106,6 @@ def csvToDicArcs(fic:str)->dict:
 
 dico_arcs = csvToDicArcs("./csv/data_arcs_poids.csv")
 
-print(dico_arcs)
-
 def csvToDicCategories(fic:str)->dict:
     """
         renvoie un dico selon l'architecture suivante :
@@ -165,7 +163,7 @@ def BFS_dico_fav (dico_favorise:dict, racine:str) -> dict:
                     dico_prec[elem]=racine_courante
     return dico_prec 
 
-def Dijkstra_ (dico_arcs_poids:dict, racine:str) -> dict:
+def dijkstra (dico_arcs_poids:dict, racine:str, target:str) -> dict:
     """
         https://en.wikipedia.org/wiki/Dijkstra's_algorithm
 
@@ -177,20 +175,56 @@ def Dijkstra_ (dico_arcs_poids:dict, racine:str) -> dict:
         4. Repeat steps 2 and 3 until all nodes are finished.
 
     """
+    def obtient_min(queue:list[tuple]) -> int :
+        """ renvoie l'index du minimum de la liste de priorite"""
+        nums = [queue[i] for i in range(len(queue))]
+        return nums.index(min(nums))
+    
+    distances = {}
+    dernier_sommet_visite = {} # genere un dico de precedents pour retrouver le chemin d'origine
+    distances[racine] = 0
+    queue_de_priorite = [(distances[racine], racine)]
 
-    favs = dico_arcs_poids[racine]['favorise']
-    for fav in favs :
-        pass
+    while len(queue_de_priorite) > 0 :
+        dist_courante, noeud_courant = queue_de_priorite.pop(obtient_min(queue_de_priorite))
+        
+        if noeud_courant not in dico_arcs_poids.keys() or 'favorise' not in dico_arcs_poids[noeud_courant].keys() :
+            continue
+
+        voisins = dico_arcs_poids[noeud_courant]['favorise']
+        poids = dico_arcs_poids[noeud_courant]['poids_favorise']
+
+        if dist_courante > distances[noeud_courant]:
+            continue
+
+        for i in range(len(voisins)) :
+            distance = dist_courante + int(poids[i])
+            if voisins[i] not in distances.keys() :
+                distances[voisins[i]] = distance
+                dernier_sommet_visite[voisins[i]] = noeud_courant
+            elif distance < distances[voisins[i]]:
+                dernier_sommet_visite[voisins[i]] = noeud_courant
+            queue_de_priorite.append((distance, voisins[i]))
+    return distances, dernier_sommet_visite
 
 
 
 def plus_court_chemin(arrivee,dico_prec):
     s=arrivee 
     chem=[]
+    
     while s!=None:
         chem.insert(0,s)
-        s=dico_prec[s]
+        if s in dico_prec.keys():
+            s=dico_prec[s]
+        else :
+            s = None
     return chem
+
+distances, dico_prec = dijkstra(dico_arcs, 'ail', 'artichaut')
+print(distances, dico_prec)
+print(dico_prec['artichaut'])
+print(plus_court_chemin('artichaut',dico_prec))
 
 def chemin_entre_2_elem(racine, arrivee):
     BFS = BFS_dico_fav (dico_favorise, racine)
