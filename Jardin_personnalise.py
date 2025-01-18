@@ -51,7 +51,6 @@ def csvToDicBio(fic:str)->dict:
     return dico
 
 dico_bioindicateurs = csvToDicBio("./csv/data_sommets_bioindicateurs.csv")
-# print(dico_bioindicateurs)
 
 def csvToDicFav(fic:str)->dict:  
     dico = {}
@@ -127,20 +126,6 @@ def csvToDicCategories(fic:str)->dict:
 dico_categories = csvToDicCategories("./csv/data_sommets_categories.csv")
 
 
-# Ebauche d'implementation de filtre pour correspondre aux indicateurs, mais ne fonctionne pas car toutes les plantes ne sont pas renseignees
-# def correspond_au_milieu(plante):
-#     """
-#         correspond_au_milieu est une fonction de 'callback' elle est
-#         appellée pour filtrer le dictionaire des favorise
-#     """
-#     print("pair", dico_bioindicateurs[plante], '\n')
-#     # if key in wanted_keys:
-#     #     return True  # garde la paire en cours dans le dico filtré
-#     # else:
-#     #     return False  # supprime la paire du dico filtré
- 
-# dico_favorise_filtre = dict(filter(correspond_au_milieu, dico_favorise.keys()))
-
 
 
 
@@ -163,7 +148,7 @@ def BFS_dico_fav (dico_favorise:dict, racine:str) -> dict:
                     dico_prec[elem]=racine_courante
     return dico_prec 
 
-def dijkstra (dico_arcs_poids:dict, racine:str, target:str) -> dict:
+def dijkstra (dico_arcs_poids:dict, racine:str) -> dict:
     """
         https://en.wikipedia.org/wiki/Dijkstra's_algorithm
 
@@ -173,7 +158,6 @@ def dijkstra (dico_arcs_poids:dict, racine:str, target:str) -> dict:
            If a neighbor’s current value is smaller than the cumulative sum, it stays the same. Mark the “current node” as finished.
         3. Mark the unfinished minimum-value node as the “current node”.
         4. Repeat steps 2 and 3 until all nodes are finished.
-
     """
     def obtient_min(queue:list[tuple]) -> int :
         """ renvoie l'index du minimum de la liste de priorite"""
@@ -221,10 +205,6 @@ def plus_court_chemin(arrivee,dico_prec):
             s = None
     return chem
 
-distances, dico_prec = dijkstra(dico_arcs, 'ail', 'artichaut')
-print(distances, dico_prec)
-print(dico_prec['artichaut'])
-print(plus_court_chemin('artichaut',dico_prec))
 
 def chemin_entre_2_elem(racine, arrivee):
     BFS = BFS_dico_fav (dico_favorise, racine)
@@ -236,10 +216,21 @@ def chemin_entre_2_elem_en_boucle(X, Y):
     chm2 = chemin_entre_2_elem(Y, X)
     chm1.pop()
     return chm1+chm2
+# Version Dijksrta
+def chemin_entre_2_elem_dij(racine, arrivee):
+    distances, dico_prec = dijkstra(dico_arcs, racine)
+    chemin = plus_court_chemin(arrivee,dico_prec)
+    return chemin
+
+def chemin_entre_2_elem_en_boucle_dij(X, Y):
+    chm1 = chemin_entre_2_elem_dij(X, Y)
+    chm2 = chemin_entre_2_elem_dij(Y, X)
+    chm1.pop()
+    return chm1+chm2
 
 ##########  AFFICHAGE #############
 
-def affichage (chemin:list)->None :
+def affichage (chemin:list, chemin_du_fichier_dot:str)->None :
     def genere_dot (chemin : list, chemin_du_fichier_dot : str) -> None:
         """
             Genere un fichier .dot a partir d'un chemin
@@ -254,21 +245,28 @@ def affichage (chemin:list)->None :
         style = ''
         nuisibles = []
         auxiliaires = []
-        for i in range(len(chemin)-1):
-            chemin_en_dot += f'{tab}"{chemin[i]}" -> "{chemin[i+1]}"\n'
-            # print(dico_arcs[chemin[i]].keys())
-            if 'attire' in dico_arcs[chemin[i]].keys() :
-                for elem in dico_arcs[chemin[i]]['attire'] :
-                    # arcs_attire += f'{tab}"{chemin[i]}" -> "{elem}" [color=darkgreen, style=dotted]\n'
-                    arcs_attire += f'{tab}"{elem}" -> "{chemin[i]}" [color=darkgreen, style=dotted]\n'
-                    if dico_categories[elem] == 'nuisible' and elem not in nuisibles : nuisibles.append(elem)
-                    elif dico_categories[elem] == 'auxiliaire' and elem not in auxiliaires : auxiliaires.append(elem)
 
-            if 'repousse' in dico_arcs[chemin[i]].keys() :
-                for elem in dico_arcs[chemin[i]]['repousse'] :
-                    arcs_repousse += f'{tab}"{chemin[i]}" -> "{elem}" [color=crimson, style=dotted]\n'
-                    if dico_categories[elem] == 'nuisible' and elem not in nuisibles : nuisibles.append(elem)
-                    elif dico_categories[elem] == 'auxiliaire' and elem not in auxiliaires : auxiliaires.append(elem)
+        noeuds_visites = []
+
+        for i in range(len(chemin)-1):  
+            index_de_lelem_favorise = dico_arcs[chemin[i]]['favorise'].index(chemin[i+1])
+            poids_de_lelem_favorise = dico_arcs[chemin[i]]['poids_favorise'][index_de_lelem_favorise]
+
+            chemin_en_dot += f'{tab}"{chemin[i]}" -> "{chemin[i+1]}" [label="{poids_de_lelem_favorise}"]\n'
+
+            if chemin[i] not in noeuds_visites :
+                if 'attire' in dico_arcs[chemin[i]].keys() :
+                    for elem in dico_arcs[chemin[i]]['attire'] :                    
+                        arcs_attire += f'{tab}"{elem}" -> "{chemin[i]}" [color=darkgreen, style=dotted]\n'
+                        if dico_categories[elem] == 'nuisible' and elem not in nuisibles : nuisibles.append(elem)
+                        elif dico_categories[elem] == 'auxiliaire' and elem not in auxiliaires : auxiliaires.append(elem)
+
+                if 'repousse' in dico_arcs[chemin[i]].keys() :
+                    for elem in dico_arcs[chemin[i]]['repousse'] :
+                        arcs_repousse += f'{tab}"{chemin[i]}" -> "{elem}" [color=crimson, style=dotted]\n'
+                        if dico_categories[elem] == 'nuisible' and elem not in nuisibles : nuisibles.append(elem)
+                        elif dico_categories[elem] == 'auxiliaire' and elem not in auxiliaires : auxiliaires.append(elem)
+            noeuds_visites.append(chemin[i])
         
         style += f'{tab}node [color = green]\n'
         for aux in auxiliaires:
@@ -297,29 +295,6 @@ def affichage (chemin:list)->None :
 
         node [shape=circle]
     }\n"""
-    #     legende = """
-    # subgraph cluster1 {
-    #     label = "Legende" ;
-    #     shape = rectangle ;
-    #     color = black ;
-    #     a [style=invis] ;
-    #     b [style=invis] ;
-    #     c [style=invis] ;
-    #     d [style=invis] ;
-    #     c -> d [label="only ts", style=dashed, fontsize=20] ; 
-    #     a -> b [label="ts and js", fontsize=20] ;
-    #     gui -> controller [style=invis] ;
-    #     view -> model [style=invis] ;
-    #     builtins -> utilities [style=invis] ;
-
-    #     gui [style=filled, fillcolor="#ffcccc"] ;
-    #     controller [style=filled, fillcolor="#ccccff"] ;
-    #     view [style=filled, fillcolor="#ccffcc"] ;
-    #     model [style=filled, fillcolor="#ffccff"] ;
-    #     builtins [style=filled, fillcolor="#ffffcc"] ;
-    #     utilities ;
-    #     "external libraries" [shape=rectangle] ;
-    # }\n"""
         contenu_du_fichier_dot = 'digraph {\n' + parram + style + chemin_en_dot + arcs_repousse + arcs_attire + legende + '}\n'
 
         with open(chemin_du_fichier_dot, 'w+') as fichier:
@@ -335,7 +310,6 @@ def affichage (chemin:list)->None :
         # import os
         # os.system(f'dot -T png -O {chemin_du_fichier_dot}')
     
-    chemin_du_fichier_dot = "./graph/graph.dot"
     genere_dot(chemin, chemin_du_fichier_dot)
     genere_image(chemin_du_fichier_dot)
 
@@ -345,8 +319,8 @@ ingredients = ['genet', 'topinambour', 'pissenlit', 'cassis', 'lin', 'carotte sa
 X = 'pissenlit'
 Y = 'potiron'
 
-X = 'ail'
-Y = 'artichaut'
+# X = 'ail'
+# Y = 'artichaut'
 
 # X = 'fenouil'
 # Y = 'cosmos'
@@ -355,16 +329,10 @@ Y = 'artichaut'
 # Y = "cresson"
 
 
-chemin = chemin_entre_2_elem_en_boucle(X, Y)
+chemin = chemin_entre_2_elem_en_boucle(X, Y) #chemin favorise standard
+chem2 = chemin_entre_2_elem_en_boucle_dij(X,Y) #chemin favorise avec algo de dijskarta
 
-print(chemin)
+print(chemin, '\n', chem2)
 
-affichage(chemin)
-
-
-# for i in dico_arcs.keys() :
-#     if 'attire' in dico_arcs[i] :
-#         for att in dico_arcs[i]['attire']:
-#             print(dico_categories[att])
-#             if dico_categories[att] == 'nuisible' :
-#                 print(i, att)
+affichage(chemin, "./graph/graph_simple.dot")
+affichage(chem2, "./graph/graph_pondere_dijkstra.dot")
