@@ -1,27 +1,29 @@
 digraph {
     layout="circo"
     node [color = green]
+    "coccinelle"
+    "punaise"
     node [color = red]
     "campagnol"
+    "nematode"
     "altise du colza"
     "fourmi"
     "mouche de la carotte"
     node [color = black]
-    "pissenlit" -> "ail" [label="4"]
-    "ail" -> "tomate" [label="2"]
-    "tomate" -> "poireau" [label="1"]
-    "poireau" -> "celeri" [label="2"]
-    "celeri" -> "potiron" [label="10"]
-    "potiron" -> "ciboulette" [label="2"]
-    "ciboulette" -> "pecher" [label="1"]
-    "pecher" -> "ail" [label="4"]
-    "ail" -> "pissenlit" [label="6"]
-    "pissenlit" -> "campagnol" [color=crimson, style=dotted]
+    "ail" -> "rosier" [label="1"]
+    "rosier" -> "souci" [label="2"]
+    "souci" -> "pomme de terre" [label="4"]
+    "pomme de terre" -> "ciboulette chinoise" [label="1"]
+    "ciboulette chinoise" -> "tomate" [label="2"]
+    "tomate" -> "rosier" [label="1"]
+    "rosier" -> "ail" [label="4"]
     "ail" -> "campagnol" [color=crimson, style=dotted]
+    "souci" -> "nematode" [color=crimson, style=dotted]
     "tomate" -> "altise du colza" [color=crimson, style=dotted]
     "tomate" -> "fourmi" [color=crimson, style=dotted]
     "tomate" -> "mouche de la carotte" [color=crimson, style=dotted]
-    "poireau" -> "mouche de la carotte" [color=crimson, style=dotted]
+    "coccinelle" -> "souci" [color=darkgreen, style=dotted]
+    "punaise" -> "souci" [color=darkgreen, style=dotted]
 
     subgraph cluster_01 { 
         node [shape=plaintext]

@@ -249,7 +249,7 @@ def affichage (chemin:list, chemin_du_fichier_dot:str)->None :
 
             chemin_en_dot += f'{tab}"{chemin[i]}" -> "{chemin[i+1]}" [label="{poids_de_lelem_favorise}"]\n'
 
-            if chemin[i] not in noeuds_visites :
+            if chemin[i] not in noeuds_visites : # ecrit les liaisons d'attirance que si c'est la premiere fois que tu rencontres cette plante (pour eviter les doublons)
                 if 'attire' in dico_arcs[chemin[i]].keys() :
                     for elem in dico_arcs[chemin[i]]['attire'] :                    
                         arcs_attire += f'{tab}"{elem}" -> "{chemin[i]}" [color=darkgreen, style=dotted]\n'
@@ -314,8 +314,8 @@ ingredients = ['genet', 'topinambour', 'pissenlit', 'cassis', 'lin', 'carotte sa
 X = 'pissenlit'
 Y = 'potiron'
 
-# X = 'ail'
-# Y = 'artichaut'
+X = 'ail'
+Y = 'ciboulette chinoise'
 
 # X = 'fenouil'
 # Y = 'cosmos'
