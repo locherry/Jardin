@@ -15,6 +15,6 @@ Magnifique jardin pour notre projet d'info
 
 #### REGLES
 
-Vous disposez de deux plants dans votre potagé et vous souhaiter faire des crêpes. Seulement ces deux plants ne seront pas suffisant...
+Vous disposez de deux plants dans votre potagé et vous souhaiter faire des galettes. Seulement ces deux plants ne seront pas suffisant pour garnir richement vos galettes...
 Dépêchez vous d'aller acheter chez le maraîcher les autres plants suggérés par cet algorithme pour pouvoir vous régaler! 
-En effet, nous vous garantissons que l'algorithme ne vous suggèrera qu'un minimum de plants à rajouter pour réaliser la recette ; ce sont vraiment que les ingrédients essentiels que nous vous proposons de cultiver. De plus, toujours dans une idée de réduire vos frais tout en vous régalant l'algorithme vous proposera des plants avec des relations symbiotiques permettant de réduire votre consommation de compost!  
+En effet, nous vous garantissons que l'algorithme ne vous suggèrera qu'un minimum de plants à ajouter pour réaliser la recette ; ce ne sont vraiment que les ingrédients essentiels que nous vous proposons de cultiver. De plus, toujours dans une idée de réduire vos frais tout en vous régalant l'algorithme vous proposera des plants avec des relations symbiotiques permettant de réduire votre consommation de compost!  
