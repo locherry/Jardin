@@ -200,24 +200,39 @@ def plus_court_chemin(arrivee,dico_prec):
             s = None
     return chem
 
-
-def chemin_entre_2_elem(racine, arrivee):
-    BFS = BFS_dico_fav (dico_favorise, racine)
-    chemin = plus_court_chemin(arrivee,BFS)
+# Version classique
+def chemin_entre_2_elem(X:str, Y:str) -> list:
+    """
+        Trouve le plus court chemin entre X et Y (le moins de noeuds possible)
+    """
+    BFS = BFS_dico_fav (dico_favorise, X)
+    chemin = plus_court_chemin(Y,BFS)
     return chemin
 
-def chemin_entre_2_elem_en_boucle(X, Y):
+def chemin_entre_2_elem_en_boucle(X:str, Y:str) -> list:
+    """
+        Trouve le plus court chemin entre X et Y, puis entre Y et X pour renvoyer une boucle
+        En utilisant BFS
+    """
     chm1 = chemin_entre_2_elem(X, Y)
     chm2 = chemin_entre_2_elem(Y, X)
     chm1.pop()
     return chm1+chm2
+
 # Version Dijksrta
-def chemin_entre_2_elem_dij(racine, arrivee):
-    distances, dico_prec = dijkstra(dico_arcs, racine)
-    chemin = plus_court_chemin(arrivee,dico_prec)
+def chemin_entre_2_elem_dij(X:str, Y:str) -> list:
+    """
+        Trouve le chemin entre X et Y qui consomme le moins de compost
+    """
+    distances, dico_prec = dijkstra(dico_arcs, Y)
+    chemin = plus_court_chemin(X,dico_prec)
     return chemin
 
-def chemin_entre_2_elem_en_boucle_dij(X, Y):
+def chemin_entre_2_elem_en_boucle_dij(X:str, Y:str) -> list:
+    """
+        Trouve le plus court chemin entre X et Y, puis entre Y et X pour renvoyer une boucle
+        En utilisant dijskarta
+    """
     chm1 = chemin_entre_2_elem_dij(X, Y)
     chm2 = chemin_entre_2_elem_dij(Y, X)
     chm1.pop()
@@ -297,10 +312,14 @@ def affichage (chemin:list, chemin_du_fichier_dot:str)->None :
             fichier.write(contenu_du_fichier_dot)
 
     def genere_image(chemin_du_fichier_dot:str) -> None:
-        command = f'dot -T png -O {chemin_du_fichier_dot}'
+        """
+            permet de generer un image a partir du chemin du fichier dot
+            cette fonction execute la commande donnee dans le TP pour generer le graph avec la librairir dot de Graphviz
+        """
+        commande = f'dot -T png -O {chemin_du_fichier_dot}'
         # deux manieres, ca:
-        import subprocess
-        subprocess.run(command, shell = True, executable="/bin/bash")
+        import subprocess # subprocess permet d'executer un programme externe a python, ici on veut executer la ligne de commande ci dessus
+        subprocess.run(commande, shell = True, executable="/bin/bash") # lance un terminal (situé ici : /bin/bash) avec la commande 'commande'
         # ou ca
         # import os
         # os.system(f'dot -T png -O {chemin_du_fichier_dot}')

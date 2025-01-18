@@ -2,7 +2,7 @@
 Magnifique jardin pour notre projet d'info
 
 #### OBJECTIFS
-- [ ] optimisation du compost Dijkstra
+- [X] optimisation du compost Dijkstra
 
 - [ ] utiliser le fichier TEST
 
@@ -10,7 +10,7 @@ Magnifique jardin pour notre projet d'info
 
 - [ ] finaliser affichage : faire une vraie legende (exporter separement la legende et joindre les 2 images) ON NE FAIT PAS 
 
-- [ ] adapter aux conditions du milieux qu'on a choisi > voir les extensions proposées qu'on peut réaliser ON NE FAIT PAS 
+- [ ] adapter aux conditions du milieu qu'on a choisi > voir les extensions proposées qu'on peut réaliser ON NE FAIT PAS 
 
 
 #### REGLES
