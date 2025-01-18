@@ -9,14 +9,12 @@ digraph {
     "thrips de l'oignon"
     "teigne du poireau"
     node [color = black]
-
     "ail" -> "chicoree"
     "chicoree" -> "epinard"
     "epinard" -> "artichaut"
     "artichaut" -> "laitue"
     "laitue" -> "carotte"
     "carotte" -> "ail"
-    
     "ail" -> "campagnol" [color=crimson, style=dotted]
     "chicoree" -> "campagnol" [color=crimson, style=dotted]
     "laitue" -> "altise du colza" [color=crimson, style=dotted]

@@ -1,41 +1,7 @@
 ########### IMPORTS ###########
 import csv
 
-########### INITIALISATION ########
-
-milieu = {
-    "lumiere" : {
-        'valeur' : 8,
-        'delta' : 2
-    },
-    "temperature" : {
-        'valeur' : 7, #1 tres froid a 9 tres chaud
-        'delta' : 1.5
-    },
-    "humidite" : {
-        'valeur' : 7,
-        'delta' : 1.5
-    },
-    "PH" : {
-        'valeur' : 4, # de 1 a 9
-        'delta' : 2
-    },
-    "niveau trophique" : {
-        'valeur' : 4, 
-        'delta' : .5
-    },
-    "texture" : {
-        'valeur' : 4.5, 
-        'delta' : 0.5
-    },
-    "matiere organique" : {
-        'valeur' : 9,
-        'delta' : 0.5
-    },
-}
-
 ########### FONCTIONS ############
-
 def csvToDicBio(fic:str)->dict:
     """
         renvoie un Dictionnaire contenant comme clefs les plantes et
@@ -49,6 +15,7 @@ def csvToDicBio(fic:str)->dict:
     return dico
 
 dico_bioindicateurs = csvToDicBio("./csv/data_sommets_bioindicateurs.csv")
+
 
 def csvToDicFav(fic:str)->dict:  
     dico = {}
@@ -120,10 +87,6 @@ def csvToDicCategories(fic:str)->dict:
 
 dico_categories = csvToDicCategories("./csv/data_sommets_categories.csv")
 
-
-
-
-
 def BFS_dico_fav (dico_favorise:dict, racine:str) -> dict:
     """
         algo de parcours en largeur
@@ -143,7 +106,7 @@ def BFS_dico_fav (dico_favorise:dict, racine:str) -> dict:
                     dico_prec[elem]=racine_courante
     return dico_prec 
 
-def dijkstra (dico_arcs_poids:dict, racine:str) -> dict:
+def dijkstra (dico_arcs_poids:dict, racine:str, target:str) -> dict:
     """
         https://en.wikipedia.org/wiki/Dijkstra's_algorithm
 
@@ -153,6 +116,7 @@ def dijkstra (dico_arcs_poids:dict, racine:str) -> dict:
            If a neighbor’s current value is smaller than the cumulative sum, it stays the same. Mark the “current node” as finished.
         3. Mark the unfinished minimum-value node as the “current node”.
         4. Repeat steps 2 and 3 until all nodes are finished.
+
     """
     def obtient_min(queue:list[tuple]) -> int :
         """ renvoie l'index du minimum de la liste de priorite"""
@@ -211,21 +175,10 @@ def chemin_entre_2_elem_en_boucle(X, Y):
     chm2 = chemin_entre_2_elem(Y, X)
     chm1.pop()
     return chm1+chm2
-# Version Dijksrta
-def chemin_entre_2_elem_dij(racine, arrivee):
-    distances, dico_prec = dijkstra(dico_arcs, racine)
-    chemin = plus_court_chemin(arrivee,dico_prec)
-    return chemin
-
-def chemin_entre_2_elem_en_boucle_dij(X, Y):
-    chm1 = chemin_entre_2_elem_dij(X, Y)
-    chm2 = chemin_entre_2_elem_dij(Y, X)
-    chm1.pop()
-    return chm1+chm2
 
 ##########  AFFICHAGE #############
 
-def affichage (chemin:list, chemin_du_fichier_dot:str)->None :
+def affichage (chemin:list)->None :
     def genere_dot (chemin : list, chemin_du_fichier_dot : str) -> None:
         """
             Genere un fichier .dot a partir d'un chemin
@@ -240,19 +193,20 @@ def affichage (chemin:list, chemin_du_fichier_dot:str)->None :
         style = ''
         nuisibles = []
         auxiliaires = []
+
         for i in range(len(chemin)-1):
             chemin_en_dot += f'{tab}"{chemin[i]}" -> "{chemin[i+1]}"\n'
             # print(dico_arcs[chemin[i]].keys())
             if 'attire' in dico_arcs[chemin[i]].keys() :
                 for elem in dico_arcs[chemin[i]]['attire'] :
                     # arcs_attire += f'{tab}"{chemin[i]}" -> "{elem}" [color=darkgreen, style=dotted]\n'
-                    arcs_attire += f'{tab}"{elem}" -> "{chemin[i]}" [color=darkgreen, style=dotted]\n'
+                    arcs_attire += f'{tab}"{elem}" -> "{chemin[i]}" [color=darkgreen, style=dotted]\n' #permet de faire les flèches de l'elem vers le chemin[i]
                     if dico_categories[elem] == 'nuisible' and elem not in nuisibles : nuisibles.append(elem)
                     elif dico_categories[elem] == 'auxiliaire' and elem not in auxiliaires : auxiliaires.append(elem)
 
             if 'repousse' in dico_arcs[chemin[i]].keys() :
                 for elem in dico_arcs[chemin[i]]['repousse'] :
-                    arcs_repousse += f'{tab}"{chemin[i]}" -> "{elem}" [color=crimson, style=dotted]\n'
+                    arcs_repousse += f'{tab}"{chemin[i]}" -> "{elem}" [color=crimson, style=dotted]\n' #permet de faire les flèches 
                     if dico_categories[elem] == 'nuisible' and elem not in nuisibles : nuisibles.append(elem)
                     elif dico_categories[elem] == 'auxiliaire' and elem not in auxiliaires : auxiliaires.append(elem)
         
@@ -283,6 +237,7 @@ def affichage (chemin:list, chemin_du_fichier_dot:str)->None :
 
         node [shape=circle]
     }\n"""
+    
         contenu_du_fichier_dot = 'digraph {\n' + parram + style + chemin_en_dot + arcs_repousse + arcs_attire + legende + '}\n'
 
         with open(chemin_du_fichier_dot, 'w+') as fichier:
@@ -298,6 +253,7 @@ def affichage (chemin:list, chemin_du_fichier_dot:str)->None :
         # import os
         # os.system(f'dot -T png -O {chemin_du_fichier_dot}')
     
+    chemin_du_fichier_dot = "./graph/graph.dot"
     genere_dot(chemin, chemin_du_fichier_dot)
     genere_image(chemin_du_fichier_dot)
 
@@ -307,8 +263,8 @@ ingredients = ['genet', 'topinambour', 'pissenlit', 'cassis', 'lin', 'carotte sa
 X = 'pissenlit'
 Y = 'potiron'
 
-# X = 'ail'
-# Y = 'artichaut'
+X = 'ail'
+Y = 'artichaut'
 
 # X = 'fenouil'
 # Y = 'cosmos'
@@ -317,10 +273,8 @@ Y = 'potiron'
 # Y = "cresson"
 
 
-chemin = chemin_entre_2_elem_en_boucle(X, Y) #chemin favorise standard
-chem2 = chemin_entre_2_elem_en_boucle_dij(X,Y) #chemin favorise avec algo de dijskarta
+chemin = chemin_entre_2_elem_en_boucle(X, Y)
 
-print(chemin, '\n', chem2)
+print(chemin)
 
-affichage(chemin, "./graph/graph_simple.dot")
-affichage(chem2, "./graph/graph_pondere_dijkstra.dot")
+affichage(chemin)
