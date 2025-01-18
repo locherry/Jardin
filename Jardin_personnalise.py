@@ -240,21 +240,28 @@ def affichage (chemin:list, chemin_du_fichier_dot:str)->None :
         style = ''
         nuisibles = []
         auxiliaires = []
-        for i in range(len(chemin)-1):
-            chemin_en_dot += f'{tab}"{chemin[i]}" -> "{chemin[i+1]}"\n'
-            # print(dico_arcs[chemin[i]].keys())
-            if 'attire' in dico_arcs[chemin[i]].keys() :
-                for elem in dico_arcs[chemin[i]]['attire'] :
-                    # arcs_attire += f'{tab}"{chemin[i]}" -> "{elem}" [color=darkgreen, style=dotted]\n'
-                    arcs_attire += f'{tab}"{elem}" -> "{chemin[i]}" [color=darkgreen, style=dotted]\n'
-                    if dico_categories[elem] == 'nuisible' and elem not in nuisibles : nuisibles.append(elem)
-                    elif dico_categories[elem] == 'auxiliaire' and elem not in auxiliaires : auxiliaires.append(elem)
+        
+        noeuds_visites = []
 
-            if 'repousse' in dico_arcs[chemin[i]].keys() :
-                for elem in dico_arcs[chemin[i]]['repousse'] :
-                    arcs_repousse += f'{tab}"{chemin[i]}" -> "{elem}" [color=crimson, style=dotted]\n'
-                    if dico_categories[elem] == 'nuisible' and elem not in nuisibles : nuisibles.append(elem)
-                    elif dico_categories[elem] == 'auxiliaire' and elem not in auxiliaires : auxiliaires.append(elem)
+        for i in range(len(chemin)-1):  
+            index_de_lelem_favorise = dico_arcs[chemin[i]]['favorise'].index(chemin[i+1])
+            poids_de_lelem_favorise = dico_arcs[chemin[i]]['poids_favorise'][index_de_lelem_favorise]
+
+            chemin_en_dot += f'{tab}"{chemin[i]}" -> "{chemin[i+1]}" [label="{poids_de_lelem_favorise}"]\n'
+
+            if chemin[i] not in noeuds_visites :
+                if 'attire' in dico_arcs[chemin[i]].keys() :
+                    for elem in dico_arcs[chemin[i]]['attire'] :                    
+                        arcs_attire += f'{tab}"{elem}" -> "{chemin[i]}" [color=darkgreen, style=dotted]\n'
+                        if dico_categories[elem] == 'nuisible' and elem not in nuisibles : nuisibles.append(elem)
+                        elif dico_categories[elem] == 'auxiliaire' and elem not in auxiliaires : auxiliaires.append(elem)
+
+                if 'repousse' in dico_arcs[chemin[i]].keys() :
+                    for elem in dico_arcs[chemin[i]]['repousse'] :
+                        arcs_repousse += f'{tab}"{chemin[i]}" -> "{elem}" [color=crimson, style=dotted]\n'
+                        if dico_categories[elem] == 'nuisible' and elem not in nuisibles : nuisibles.append(elem)
+                        elif dico_categories[elem] == 'auxiliaire' and elem not in auxiliaires : auxiliaires.append(elem)
+            noeuds_visites.append(chemin[i])
         
         style += f'{tab}node [color = green]\n' #la couleur pour les auxiliaires sera verte 
         for aux in auxiliaires:

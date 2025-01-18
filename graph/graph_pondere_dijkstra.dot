@@ -1,0 +1,44 @@
+digraph {
+    layout="circo"
+    node [color = green]
+    node [color = red]
+    "campagnol"
+    "altise du colza"
+    "fourmi"
+    "mouche de la carotte"
+    node [color = black]
+    "pissenlit" -> "ail" [label="4"]
+    "ail" -> "tomate" [label="2"]
+    "tomate" -> "poireau" [label="1"]
+    "poireau" -> "celeri" [label="2"]
+    "celeri" -> "potiron" [label="10"]
+    "potiron" -> "ciboulette" [label="2"]
+    "ciboulette" -> "pecher" [label="1"]
+    "pecher" -> "ail" [label="4"]
+    "ail" -> "pissenlit" [label="6"]
+    "pissenlit" -> "campagnol" [color=crimson, style=dotted]
+    "ail" -> "campagnol" [color=crimson, style=dotted]
+    "tomate" -> "altise du colza" [color=crimson, style=dotted]
+    "tomate" -> "fourmi" [color=crimson, style=dotted]
+    "tomate" -> "mouche de la carotte" [color=crimson, style=dotted]
+    "poireau" -> "mouche de la carotte" [color=crimson, style=dotted]
+
+    subgraph cluster_01 { 
+        node [shape=plaintext]
+        key [label=<<table border="0" cellpadding="2" cellspacing="0" cellborder="0">
+            <tr><td align="right" port="i1">favorise</td></tr>
+            <tr><td align="right" port="i2">attire</td></tr>
+            <tr><td align="right" port="i3">repousse</td></tr>
+            </table>>]
+            key2 [label=<<table border="0" cellpadding="2" cellspacing="0" cellborder="0">
+            <tr><td port="i1">&nbsp;</td></tr>
+            <tr><td port="i2">&nbsp;</td></tr>
+            <tr><td port="i3">&nbsp;</td></tr>
+        </table>>]
+        key:i1:e -> key2:i1:w [color=black]
+        key2:i2:w -> key:i2:e [color=darkgreen, style=dotted]
+        key:i3:e -> key2:i3:w [color=crimson, style=dotted]
+
+        node [shape=circle]
+    }
+}
