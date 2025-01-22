@@ -19,7 +19,6 @@ def relatif_vers_absolu(chemin_du_fichier)->str :
     import os 
     return os.path.realpath(chemin_du_fichier) #fonction magique qui convertit le chemin en chemin absolu, pas besoin de s'embeter
 
-
 def csvToDicArcs(fic:str)->dict:
     """
         renvoie un dico selon l'architecture suivante :
@@ -72,9 +71,6 @@ def csvToDicCategories(fic:str)->dict:
     return dico
 
 dico_categories = csvToDicCategories(relatif_vers_absolu("./csv/data_sommets_categories.csv"))
-
-
-
 
 def BFS_dico_fav (dico_arcs:dict, racine:str) -> dict:
     """
@@ -138,9 +134,6 @@ def dijkstra (dico_arcs_poids:dict, racine:str) -> dict:
                 dernier_sommet_visite[voisins[i]] = noeud_courant
             queue_de_priorite.append((distance, voisins[i]))
     return distances, dernier_sommet_visite
-
-
-
 
 def plus_court_chemin(arrivee:str,dico_prec:dict) -> list|None:
     s=arrivee 
@@ -296,4 +289,3 @@ def affichage (chemin:list, chemin_du_fichier_dot:str)->None :
 
     else:
         print("Impossible d'afficher le graphique de plus court chemin car le chemin est inexistant!")
-
