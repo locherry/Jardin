@@ -1,5 +1,6 @@
 ########################################################
 import csv
+import Jardin_personnalise
 
 # Definir ici la fonction calcul_liste_longueurs(liste_paires_depart_arrivee)
 # qui lit le fichier 'data_arcs.csv' dans le repertoire courant puis
@@ -21,22 +22,34 @@ import csv
 
 
 def calcul_liste_longueurs(liste_paires_depart_arrivee):
-# A DEFINIR ...
+    liste_longueurs = []
+    for lp in liste_paires_depart_arrivee:
+        try:
+            chemin = Jardin_personnalise.chemin_entre_2_elem(lp[0], lp[1])
+            liste_longueurs.append(len(chemin))
+        except :
+            liste_longueurs.append(None)
+    
+    return liste_longueurs
 
 
-# UNE FOIS CETTE FONCTION DEFINIE, VOUS POUVEZ LA TESTER EN EXECUTANT
-# DIRECTEMENT LE PROGRAMME CI-DESSOUS.
+
+    # A DEFINIR ...
 
 
-########################################################
-# NE PAS MODIFIER LA PARTIE CI-DESSOUS, SAUF SI VOUS
-# ETES DANS LE ROLE D'EVALUATEUR.
-# SI VOUS ETES EVALUATEUR, LA SEULE MODIFICATION A APPORTER
-# EST DE MODIFIER CI-DESSOUS LA LIGNE QUI INITIALISE LA
-# VARIABLE reference_longueurs_chemins_min
-# AFIN DE LA RENSEIGNER AVEC LE JEU DE TEST QUI SERA
-# MIS A VOTRE DISPOSITION SUR MOODLE.
-########################################################
+    # UNE FOIS CETTE FONCTION DEFINIE, VOUS POUVEZ LA TESTER EN EXECUTANT
+    # DIRECTEMENT LE PROGRAMME CI-DESSOUS.
+
+
+    ########################################################
+    # NE PAS MODIFIER LA PARTIE CI-DESSOUS, SAUF SI VOUS
+    # ETES DANS LE ROLE D'EVALUATEUR.
+    # SI VOUS ETES EVALUATEUR, LA SEULE MODIFICATION A APPORTER
+    # EST DE MODIFIER CI-DESSOUS LA LIGNE QUI INITIALISE LA
+    # VARIABLE reference_longueurs_chemins_min
+    # AFIN DE LA RENSEIGNER AVEC LE JEU DE TEST QUI SERA
+    # MIS A VOTRE DISPOSITION SUR MOODLE.
+    ########################################################
 
 def run_test():
     # Ce programme compare les longueurs des chemins minimaux renvoyées
@@ -67,6 +80,11 @@ def run_test():
             print(f"    arrivee={liste_paires_depart_arrivee[i]}")
             print(f"    reference={liste_longueurs_reference[i]}")
             print(f"    longueur={liste_longueurs[i]}")
+            
+            chemin = Jardin_personnalise.chemin_entre_2_elem(liste_paires_depart_arrivee[i][0], liste_paires_depart_arrivee[i][1])
+
+            print(chemin)
+            
     
     
     print()

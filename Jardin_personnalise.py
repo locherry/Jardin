@@ -94,7 +94,7 @@ def BFS_dico_fav (dico_favorise:dict, racine:str) -> dict:
                 if elem not in deja_traites and elem not in a_traiter:
                     a_traiter.append(elem)
                     dico_prec[elem]=racine_courante
-    return dico_prec 
+    return dico_prec
 
 def dijkstra (dico_arcs_poids:dict, racine:str) -> dict:
     """
@@ -141,7 +141,7 @@ def dijkstra (dico_arcs_poids:dict, racine:str) -> dict:
 
 
 
-def plus_court_chemin(arrivee,dico_prec):
+def plus_court_chemin(arrivee:str,dico_prec:dict) -> list|None:
     s=arrivee 
     chem=[]
     
@@ -151,10 +151,14 @@ def plus_court_chemin(arrivee,dico_prec):
             s=dico_prec[s]
         else :
             s = None
-    return chem
+    if len(chem) == 1:
+        var=None
+    else:
+        var=chem
+    return var
 
 # Version classique
-def chemin_entre_2_elem(X:str, Y:str) -> list:
+def chemin_entre_2_elem(X:str, Y:str) -> list|None:
     """
         Trouve le plus court chemin entre X et Y (le moins de noeuds possible)
     """
@@ -162,18 +166,22 @@ def chemin_entre_2_elem(X:str, Y:str) -> list:
     chemin = plus_court_chemin(Y,BFS)
     return chemin
 
-def chemin_entre_2_elem_en_boucle(X:str, Y:str) -> list:
+def chemin_entre_2_elem_en_boucle(X:str, Y:str) -> list|None:
     """
         Trouve le plus court chemin entre X et Y, puis entre Y et X pour renvoyer une boucle
         En utilisant BFS
     """
     chm1 = chemin_entre_2_elem(X, Y)
     chm2 = chemin_entre_2_elem(Y, X)
-    chm1.pop()
-    return chm1+chm2
+    if chm1==None or chm2==None:
+        result= None
+    else:
+        chm1.pop()
+        result=chm1+chm2
+    return result
 
 # Version Dijksrta
-def chemin_entre_2_elem_dij(X:str, Y:str) -> list:
+def chemin_entre_2_elem_dij(X:str, Y:str) -> list|None:
     """
         Trouve le chemin entre X et Y qui consomme le moins de compost
     """
@@ -181,15 +189,19 @@ def chemin_entre_2_elem_dij(X:str, Y:str) -> list:
     chemin = plus_court_chemin(X,dico_prec)
     return chemin
 
-def chemin_entre_2_elem_en_boucle_dij(X:str, Y:str) -> list:
+def chemin_entre_2_elem_en_boucle_dij(X:str, Y:str) -> list|None:
     """
         Trouve le plus court chemin entre X et Y, puis entre Y et X pour renvoyer une boucle
         En utilisant dijskarta
     """
     chm1 = chemin_entre_2_elem_dij(X, Y)
     chm2 = chemin_entre_2_elem_dij(Y, X)
-    chm1.pop()
-    return chm1+chm2
+    if chm1==None or chm2==None:
+        result= None
+    else:
+        chm1.pop()
+        result=chm1+chm2
+    return result
 
 ##########  AFFICHAGE #############
 
@@ -277,29 +289,7 @@ def affichage (chemin:list, chemin_du_fichier_dot:str)->None :
         # import os
         # os.system(f'dot -T png -O {chemin_du_fichier_dot}')
     
-    genere_dot(chemin, chemin_du_fichier_dot)
-    genere_image(chemin_du_fichier_dot)
+    if chemin!=None:
+        genere_dot(chemin, chemin_du_fichier_dot)
+        genere_image(chemin_du_fichier_dot)
 
-##########  PRINCIPAL #############
-ingredients = ['genet', 'topinambour', 'pissenlit', 'cassis', 'lin', 'carotte sauvage', 'cumin', 'cerfeuil commun', 'melisse citronnelle', 'groseillier', 'sauge', 'moutarde', 'morelle de balbis', 'ciboulette chinoise', 'anis', 'panais', 'courgette', 'cornichon', 'bourrache officinale', 'sarriette', 'feve', 'melon', 'tournesol', 'echalote', 'thym', 'romarin', 'achillee millefeuille', 'prunier', 'framboisier', 'cerisier', 'rue fetide', 'navet', 'roquette', 'chicoree', 'epinard', 'artichaut', 'persil', 'agrume', 'lavande', 'rosier', 'tanaisie commune', 'courge', 'origan', 'vigne', 'poirier commun', 'trefle blanc', 'mache', 'potiron', 'mais', 'haricot', 'pasteque', 'cosmos', 'tomate', 'basilic', 'fenouil', 'celeri', 'betterave', 'coriandre', 'pois', 'camomille allemande', 'kiwi', 'pomme de terre', 'asperge', 'concombre', 'aneth', 'chou', 'laitue', 'oignon','fraisier des bois', 'souci', 'phacelie', 'pommier', 'ciboulette', 'pecher', 'ail', 'carotte', 'poireau', 'cresson', 'radis']
-
-X = 'pissenlit'
-Y = 'potiron'
-
-X = 'ail'
-Y = 'ciboulette chinoise'
-
-# X = 'fenouil'
-# Y = 'cosmos'
-
-# X = 'basilic'
-# Y = "cresson"
-
-
-chemin = chemin_entre_2_elem_en_boucle(X, Y) #chemin favorise standard
-chem2 = chemin_entre_2_elem_en_boucle_dij(X,Y) #chemin favorise avec algo de dijskarta
-
-print(chemin, '\n', chem2)
-
-affichage(chemin, "./graph/graph_simple.dot")
-affichage(chem2, "./graph/graph_pondere_dijkstra.dot")
