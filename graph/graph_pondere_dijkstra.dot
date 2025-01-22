@@ -4,24 +4,24 @@ digraph {
     "coccinelle"
     "punaise"
     node [color = red]
-    "campagnol"
-    "nematode"
     "altise du colza"
     "fourmi"
     "mouche de la carotte"
+    "campagnol"
+    "nematode"
     node [color = black]
+    "ciboulette chinoise" -> "tomate" [label="2"]
+    "tomate" -> "rosier" [label="1"]
+    "rosier" -> "ail" [label="4"]
     "ail" -> "rosier" [label="1"]
     "rosier" -> "souci" [label="2"]
     "souci" -> "pomme de terre" [label="4"]
     "pomme de terre" -> "ciboulette chinoise" [label="1"]
-    "ciboulette chinoise" -> "tomate" [label="2"]
-    "tomate" -> "rosier" [label="1"]
-    "rosier" -> "ail" [label="4"]
-    "ail" -> "campagnol" [color=crimson, style=dotted]
-    "souci" -> "nematode" [color=crimson, style=dotted]
     "tomate" -> "altise du colza" [color=crimson, style=dotted]
     "tomate" -> "fourmi" [color=crimson, style=dotted]
     "tomate" -> "mouche de la carotte" [color=crimson, style=dotted]
+    "ail" -> "campagnol" [color=crimson, style=dotted]
+    "souci" -> "nematode" [color=crimson, style=dotted]
     "coccinelle" -> "souci" [color=darkgreen, style=dotted]
     "punaise" -> "souci" [color=darkgreen, style=dotted]
 

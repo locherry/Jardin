@@ -1,54 +1,7 @@
 ########### IMPORTS ###########
 import csv
 
-########### INITIALISATION ########
-
-milieu = {
-    "lumiere" : {
-        'valeur' : 8,
-        'delta' : 2
-    },
-    "temperature" : {
-        'valeur' : 7, #1 tres froid a 9 tres chaud
-        'delta' : 1.5
-    },
-    "humidite" : {
-        'valeur' : 7,
-        'delta' : 1.5
-    },
-    "PH" : {
-        'valeur' : 4, # de 1 a 9
-        'delta' : 2
-    },
-    "niveau trophique" : {
-        'valeur' : 4, 
-        'delta' : .5
-    },
-    "texture" : {
-        'valeur' : 4.5, 
-        'delta' : 0.5
-    },
-    "matiere organique" : {
-        'valeur' : 9,
-        'delta' : 0.5
-    },
-}
-
 ########### FONCTIONS ############
-
-def csvToDicBio(fic:str)->dict:
-    """
-        renvoie un Dictionnaire contenant comme clefs les plantes et
-        comme valeurs la liste des bioindicateurs.
-    """
-    dico = {}
-    with open(fic) as f:
-        myReader = csv.reader(f,delimiter = ";")
-        for row in myReader:
-            dico[row[0]] = row[1:8]
-    return dico
-
-dico_bioindicateurs = csvToDicBio("./csv/data_sommets_bioindicateurs.csv")
 
 def csvToDicFav(fic:str)->dict:  
     dico = {}
