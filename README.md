@@ -6,7 +6,7 @@ Magnifique jardin pour notre projet d'info
 
 - [X] utiliser le fichier TEST
 
-- [ ] combiner dicofav et dicoarcs
+- [X] combiner dicofav et dicoarcs
 
 - [ ] redaction du PDF
 
