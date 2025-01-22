@@ -3,6 +3,23 @@ import csv
 
 ########### FONCTIONS ############
 
+def relatif_vers_absolu(chemin_du_fichier)->str :
+    """
+    # Permet de rendre compatible les fichiers sur n'importe quel type d'os,
+    # et d'executer le fichier python meme si on n'est pas dans le dossier du fichier
+
+    Parametre
+        chemin_du_fichier : string du type : "./dir1/dir2/.../nomdufichier.ext"
+    Retourne
+        chemin du type Racine + DIRECTORY_SEPARATOR + dir1 + DIRECTORY_SEPARATOR + nomdufichier.ext
+
+        # Racine est le chemin du fichier vers le dossier du fichier python
+        # DIRECTORY_SEPARATOR est le caractere de separation des dossiers ('\' sur windows, '/' sur linux)
+    """
+    import os 
+    return os.path.realpath(chemin_du_fichier) #fonction magique qui convertit le chemin en chemin absolu, pas besoin de s'embeter
+
+
 def csvToDicArcs(fic:str)->dict:
     """
         renvoie un dico selon l'architecture suivante :
@@ -35,7 +52,7 @@ def csvToDicArcs(fic:str)->dict:
             dico[row[0]][row[1]].append(row[2])
     return dico
 
-dico_arcs = csvToDicArcs("./csv/data_arcs_poids.csv")
+dico_arcs = csvToDicArcs(relatif_vers_absolu("./csv/data_arcs_poids.csv"))
 
 def csvToDicCategories(fic:str)->dict:
     """
@@ -54,7 +71,7 @@ def csvToDicCategories(fic:str)->dict:
                 dico[row[0]] = row[1]
     return dico
 
-dico_categories = csvToDicCategories("./csv/data_sommets_categories.csv")
+dico_categories = csvToDicCategories(relatif_vers_absolu("./csv/data_sommets_categories.csv"))
 
 
 

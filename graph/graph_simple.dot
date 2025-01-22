@@ -1,33 +1,29 @@
 digraph {
     layout="circo"
     node [color = green]
+    "coccinelle"
     node [color = red]
+    "campagnol"
     "nematode"
     "puceron"
     "altise du colza"
     "fourmi"
     "mouche de la carotte"
-    "campagnol"
-    "chenille"
-    "escargot"
     node [color = black]
-    "basilic" -> "tomate" [label="2"]
-    "tomate" -> "poireau" [label="1"]
-    "poireau" -> "cresson" [label="2"]
-    "cresson" -> "poireau" [label="1"]
-    "poireau" -> "asperge" [label="10"]
-    "asperge" -> "basilic" [label="10"]
-    "basilic" -> "nematode" [color=crimson, style=dotted]
-    "basilic" -> "puceron" [color=crimson, style=dotted]
+    "ail" -> "pommier" [label="10"]
+    "pommier" -> "camomille allemande" [label="6"]
+    "camomille allemande" -> "pomme de terre" [label="4"]
+    "pomme de terre" -> "ciboulette chinoise" [label="1"]
+    "ciboulette chinoise" -> "tomate" [label="2"]
+    "tomate" -> "rosier" [label="1"]
+    "rosier" -> "ail" [label="4"]
+    "ail" -> "campagnol" [color=crimson, style=dotted]
+    "camomille allemande" -> "nematode" [color=crimson, style=dotted]
+    "camomille allemande" -> "puceron" [color=crimson, style=dotted]
     "tomate" -> "altise du colza" [color=crimson, style=dotted]
     "tomate" -> "fourmi" [color=crimson, style=dotted]
     "tomate" -> "mouche de la carotte" [color=crimson, style=dotted]
-    "poireau" -> "mouche de la carotte" [color=crimson, style=dotted]
-    "cresson" -> "campagnol" [color=crimson, style=dotted]
-    "cresson" -> "puceron" [color=crimson, style=dotted]
-    "cresson" -> "chenille" [color=crimson, style=dotted]
-    "cresson" -> "fourmi" [color=crimson, style=dotted]
-    "cresson" -> "escargot" [color=crimson, style=dotted]
+    "coccinelle" -> "camomille allemande" [color=darkgreen, style=dotted]
 
     subgraph cluster_01 { 
         node [shape=plaintext]
