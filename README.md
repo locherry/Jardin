@@ -4,7 +4,7 @@ Magnifique jardin pour notre projet d'info
 #### OBJECTIFS
 - [X] optimisation du compost Dijkstra
 
-- [ ] utiliser le fichier TEST
+- [X] utiliser le fichier TEST
 
 - [ ] combiner dicofav et dicoarcs
 
