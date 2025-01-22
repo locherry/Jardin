@@ -3,23 +3,6 @@ import csv
 
 ########### FONCTIONS ############
 
-def csvToDicFav(fic:str)->dict:  
-    dico = {}
-    # Dictionnaire contenant comme clefs les plantes et
-    # comme valeurs la liste des plantes pouvant etre favorisee
-    # par la plante designee par la clef.
-    # Seuls les arcs non nuls sont retenus ici.
-    with open(fic) as f:
-        myReader = csv.reader(f,delimiter = ";")
-        for row in myReader:
-            if row[1] == "favorise" :
-                if row[0] not in dico.keys() :
-                    dico[row[0]] = []
-                dico[row[0]].append(row[2])
-    return dico
-
-dico_favorise = csvToDicFav("./csv/data_arcs.csv")
-
 def csvToDicArcs(fic:str)->dict:
     """
         renvoie un dico selon l'architecture suivante :
@@ -76,8 +59,7 @@ dico_categories = csvToDicCategories("./csv/data_sommets_categories.csv")
 
 
 
-
-def BFS_dico_fav (dico_favorise:dict, racine:str) -> dict:
+def BFS_dico_fav (dico_arcs:dict, racine:str) -> dict:
     """
         algo de parcours en largeur
     """
@@ -89,11 +71,12 @@ def BFS_dico_fav (dico_favorise:dict, racine:str) -> dict:
     while len(a_traiter) > 0: 
         racine_courante = a_traiter.pop(0)
         deja_traites.append(racine_courante)
-        if racine_courante in dico_favorise:
-            for elem in dico_favorise[racine_courante]:
-                if elem not in deja_traites and elem not in a_traiter:
-                    a_traiter.append(elem)
-                    dico_prec[elem]=racine_courante
+        if racine_courante in dico_arcs.keys():
+            if 'favorise' in dico_arcs[racine_courante].keys():
+                for elem in dico_arcs[racine_courante]['favorise']:
+                    if elem not in deja_traites and elem not in a_traiter:
+                        a_traiter.append(elem)
+                        dico_prec[elem]=racine_courante
     return dico_prec
 
 def dijkstra (dico_arcs_poids:dict, racine:str) -> dict:
@@ -141,6 +124,7 @@ def dijkstra (dico_arcs_poids:dict, racine:str) -> dict:
 
 
 
+
 def plus_court_chemin(arrivee:str,dico_prec:dict) -> list|None:
     s=arrivee 
     chem=[]
@@ -162,7 +146,7 @@ def chemin_entre_2_elem(X:str, Y:str) -> list|None:
     """
         Trouve le plus court chemin entre X et Y (le moins de noeuds possible)
     """
-    BFS = BFS_dico_fav (dico_favorise, X)
+    BFS = BFS_dico_fav (dico_arcs, X)
     chemin = plus_court_chemin(Y,BFS)
     return chemin
 
