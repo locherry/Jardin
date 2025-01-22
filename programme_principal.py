@@ -25,9 +25,10 @@ X = "oeillet d'inde"
 Y = 'asperge'
 
 chemin = chemin_entre_2_elem_en_boucle(X,Y) #chemin favorise standard
-chem2 = chemin_entre_2_elem_en_boucle_dij(X,Y) #chemin favorise avec algo de dijskarta
-
-print(chemin, '\n', chem2)
-
 affichage(chemin, "./graph/graph_simple.dot")
+print(chemin)
+
+
+chem2 = chemin_entre_2_elem_en_boucle_dij(X,Y) #chemin favorise avec algo de dijskarta
 affichage(chem2, "./graph/graph_pondere_dijkstra.dot")
+print(chem2)
