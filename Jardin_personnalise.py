@@ -16,7 +16,7 @@ def relatif_vers_absolu(chemin_du_fichier)->str :
         # Racine est le chemin du fichier vers le dossier du fichier python
         # DIRECTORY_SEPARATOR est le caractere de separation des dossiers ('\' sur windows, '/' sur linux)
     """
-    import os 
+    import os
     return os.path.realpath(chemin_du_fichier) #fonction magique qui convertit le chemin en chemin absolu, pas besoin de s'embeter
 
 def csvToDicArcs(fic:str)->dict:
@@ -117,21 +117,25 @@ def dijkstra (dico_arcs_poids:dict, racine:str) -> dict:
         dist_courante, noeud_courant = queue_de_priorite.pop(obtient_min(queue_de_priorite))
         
         if noeud_courant not in dico_arcs_poids.keys() or 'favorise' not in dico_arcs_poids[noeud_courant].keys() :
+            # Si le noeuds n'a pas d'interaction favorise, pas la peine de continuer
+            continue
+
+        if dist_courante > distances[noeud_courant]:
+            # si la distance cumulee depuis le sommet de depart est plus grande que celle deja renseignee, pas la peine de continuer
             continue
 
         voisins = dico_arcs_poids[noeud_courant]['favorise']
         poids = dico_arcs_poids[noeud_courant]['poids_favorise']
 
-        if dist_courante > distances[noeud_courant]:
-            continue
 
         for i in range(len(voisins)) :
-            distance = dist_courante + int(poids[i])
-            if voisins[i] not in distances.keys() :
+            distance = dist_courante + int(poids[i]) # calcul le cumul des distances
+            if voisins[i] not in distances.keys() or distance < distances[voisins[i]]:
                 distances[voisins[i]] = distance
                 dernier_sommet_visite[voisins[i]] = noeud_courant
-            elif distance < distances[voisins[i]]:
-                dernier_sommet_visite[voisins[i]] = noeud_courant
+            # elif :
+                # dernier_sommet_visite[voisins[i]] = noeud_courant
+                # distances[voisins[i]] = distance
             queue_de_priorite.append((distance, voisins[i]))
     return distances, dernier_sommet_visite
 
