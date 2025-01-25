@@ -114,7 +114,7 @@ def dijkstra (dico_arcs_poids:dict, racine:str) -> dict:
     queue_de_priorite = [(distances[racine], racine)]
 
     while len(queue_de_priorite) > 0 :
-        dist_courante, noeud_courant = queue_de_priorite.pop(obtient_min(queue_de_priorite))
+        dist_courante, noeud_courant = queue_de_priorite.pop(obtient_min(queue_de_priorite)) # supprime l'element le plus proche du sommet de depart et recupere ses infos
         
         if noeud_courant not in dico_arcs_poids.keys() or 'favorise' not in dico_arcs_poids[noeud_courant].keys() :
             # Si le noeuds n'a pas d'interaction favorise, pas la peine de continuer
@@ -124,19 +124,18 @@ def dijkstra (dico_arcs_poids:dict, racine:str) -> dict:
             # si la distance cumulee depuis le sommet de depart est plus grande que celle deja renseignee, pas la peine de continuer
             continue
 
-        voisins = dico_arcs_poids[noeud_courant]['favorise']
-        poids = dico_arcs_poids[noeud_courant]['poids_favorise']
+        voisins = dico_arcs_poids[noeud_courant]['favorise'] # On recupere la liste des voisins
+        poids = dico_arcs_poids[noeud_courant]['poids_favorise'] # On recupere la liste des poids associes aux voisins
 
 
         for i in range(len(voisins)) :
             distance = dist_courante + int(poids[i]) # calcul le cumul des distances
             if voisins[i] not in distances.keys() or distance < distances[voisins[i]]:
-                distances[voisins[i]] = distance
-                dernier_sommet_visite[voisins[i]] = noeud_courant
-            # elif :
-                # dernier_sommet_visite[voisins[i]] = noeud_courant
-                # distances[voisins[i]] = distance
-            queue_de_priorite.append((distance, voisins[i]))
+                # si le voisin n'a pas de distance declaree (dist = +oo)
+                # ou si la distance calculee est effectivement plus courte que celle deja declaree
+                distances[voisins[i]] = distance # ecrase ou defini la distance du voisin i
+                dernier_sommet_visite[voisins[i]] = noeud_courant # Permet de genere le dico de parents, avec le noeud le plus proche in fine
+            queue_de_priorite.append((distance, voisins[i])) # Dans tous les cas on ajoute le voisin (la comparaison de distance se fera en entree de boucle)
     return distances, dernier_sommet_visite
 
 def plus_court_chemin(arrivee:str,dico_prec:dict) -> list|None:
